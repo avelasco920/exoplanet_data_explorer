@@ -1,0 +1,60 @@
+body {
+  background-color: $lightest-gray;
+}
+
+h1 {
+  font-family: $display;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: $header;
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: $header;
+  font-size: 18px;
+}
+
+h4 {
+  font-family: $header;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+span {
+  font-family: $text;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
+
+input[type="text"] {
+  font-family: $text;
+  transition: .5s ease;
+  padding: 10px;
+  border-radius: 4px;
+  &::placeholder {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+}
+
+input[type="button"] {
+  font-family: $text;
+  cursor: pointer;
+  padding: 8px 30px;
+  border-radius: 4px;
+}
+
+.grid {
+  display: grid;
+  &__2 {
+    grid-template-columns: auto auto;
+  }
+}
