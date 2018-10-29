@@ -19,6 +19,8 @@ h2 {
 h3 {
   font-family: $header;
   font-size: 18px;
+  color: $gray;
+  font-weight: bold;
 }
 
 h4 {
@@ -54,7 +56,11 @@ input[type="button"] {
 
 .grid {
   display: grid;
+  grid-column-gap: 10px;
   &__2 {
     grid-template-columns: auto auto;
+  }
+  &__3 {
+    grid-template-columns: auto auto auto;
   }
 }

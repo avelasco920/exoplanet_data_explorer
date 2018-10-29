@@ -1,11 +1,19 @@
 .content {
-  margin-top: 62px;
+  margin: 62px auto 0 auto;
   padding: 50px;
-  max-width: 1600px;
+  max-width: 1200px;
 }
 
-.selector-module {
-  height: 400px;
-  border-radius: 2px;
+.selector {
+  border-radius: 6px;
   border: 1px solid $light-gray;
+  background-color: white;
+  padding: 15px;
+
+  .header {
+    width: 100%;
+    padding: 15px 0;
+    box-sizing: border-box;
+  }
+
 }

@@ -1,26 +1,47 @@
 import React from 'react';
-import SelectorModule from './selector_module';
-const parse = require('csv-parse/lib/sync')
-import csv from '../../data/phl_hec_all_confirmed.csv'
+import SelectorModules from './selector_module';
+import csv from '../../data/phl_hec_all_confirmed.csv';
 
 class Content extends React.Component {
-  componentDidMount() {
-    const records = csv.map(line => {
+  constructor() {
+    super()
+    this.state = {
+      points: [],
+      xAxis: '',
+      yAxis: ''
+    }
+    this.updateAxisSelection = this.updateAxisSelection.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { xAxis, yAxis } = this.state;
+    if (prevState['xAxis'] !== xAxis || prevState['yAxis'] !== yAxis) {
+      const points = this.updatePoints(xAxis, yAxis);
+    }
+  }
+
+  updatePoints(x, y) {
+    const points = csv.map(line => {
       const selection = {};
-      selection['S. Distance (pc)'] = line['S. Distance (pc)'];
-      selection['P. Teq Max (K)'] = line['P. Teq Max (K)'];
+      selection['x'] = line[x];
+      selection['y'] = line[y];
       return selection;
     })
-    console.log(records);
+    this.setState({points}, () => console.log(this.state))
+  }
+
+  updateAxisSelection(axis) {
+    return (input) => {
+      this.setState({[`${axis}Axis`]: input.value})
+    }
   }
 
   render() {
-    <div className='content'>
-      <div className='grid__2'>
-        <SelectorModule/>
-        <SelectorModule/>
+    return (
+      <div className='content'>
+        <SelectorModules handleChange={this.updateAxisSelection} />
       </div>
-    </div>
+    )
   }
 }
 
