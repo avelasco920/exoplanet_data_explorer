@@ -36,11 +36,12 @@ class ScatterPlot extends React.Component {
       const chart = this.state.chart;
       // changes the data to the updated points
       chart.data.datasets[0].data = this.props.dataPoints;
-      chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
-      chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
       // forces a rerender for the chart
       chart.update();
-      setTimeout(function() {
+
+      // threre's a glitch in the library and need to set timeout in order
+      // to change scale labels when selection has changed
+      setTimeout(() => {
          chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
          chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
          chart.update();
