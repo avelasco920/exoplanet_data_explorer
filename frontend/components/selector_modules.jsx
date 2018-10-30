@@ -29,7 +29,8 @@ class SelectorModules extends React.Component {
       'S. Name HIP',
       'S. Constellation',
       'S. Type',
-      'P. Disc. Method'
+      'P. Disc. Method',
+      'P. Max Mass (EU)'
     ]
     labels = labels.filter(label => !nonNumVals.includes(label))
     return labels.map(el => {
@@ -62,13 +63,18 @@ class SelectorModules extends React.Component {
 
 const SelectorModule = props => {
   const { axis, options } = props;
+
+  // react-select takes inline styling to customize styling
+  const style = {
+
+  }
   return (
     <div className='selector module'>
       <h3 className='header'>{axis.toUpperCase()}-Axis</h3>
       <Select
         options={options}
-        className="basic-single"
-        classNamePrefix="select"
+        className='basic-single'
+        classNamePrefix='select'
         isSearchable={true}
         autosize={false}
         onChange={ props.handleChange(axis) }
