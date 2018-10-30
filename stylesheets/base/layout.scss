@@ -18,8 +18,7 @@ h2 {
 
 h3 {
   font-family: $display;
-  font-size: 18px;
-  color: $gray;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -63,4 +62,8 @@ input[type="button"] {
   &__3 {
     grid-template-columns: auto auto auto;
   }
+}
+
+.flex {
+  display: flex;
 }

@@ -48,7 +48,7 @@ class SelectorModules extends React.Component {
 
   render() {
     return (
-      <div className='grid grid__2'>
+      <div className='flex'>
         <SelectorModule
           axis='x'
           options={this.state.labels}
@@ -83,9 +83,9 @@ const SelectorModule = props => {
         isSearchable={true}
         autosize={false}
         onChange={ input => props.handleChange(axis, input) }
-        name="color"
+        name='color'
       />
-      <BimmedHistogram numBars={10} {...props}/>
+      <BinnedHistogram numBars={30} {...props}/>
     </div>
   )
 }
@@ -97,7 +97,16 @@ const SelectorModule = props => {
 
 
 
-class BimmedHistogram extends React.Component {
+class BinnedHistogram extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { distribution: [], intervals: [] };
+  }
+
+  componentDidMount() {
+    this.createChart();
+  }
+
   componentDidUpdate(prevProps) {
     const { dataPoints } = this.props
     // if dataPoints change, update data for histogram
@@ -106,11 +115,68 @@ class BimmedHistogram extends React.Component {
     }
   }
 
+  createChart() {
+    const { axis } = this.props;
+    const ctx = document.getElementById(`${axis}-histogram`);
+    var stackedBar = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: this.state.intervals,
+        datasets: [{
+          backgroundColor: '#2684ff',
+          hoverBackgroundColor: '#2684ff',
+          data: this.state.distribution
+        }]
+      },
+      options: {
+        legend: {
+          display: false,
+        },
+        axisY: {lineThickness: 1},
+        scales: {
+          scaleLineColor: 'transparent',
+          xAxes: [{
+            stacked: true,
+            barThickness : 8,
+            gridLines : { color: 'white' },
+            ticks: { fontColor: '#c4c4c4' },
+          }],
+          yAxes: [{
+            stacked: true,
+            gridLines : { color: '#f3f3f3' },
+            ticks: { fontColor: '#c4c4c4' },
+          }]
+        }
+      }
+    });
+    this.setState({chart: stackedBar})
+  }
+
   updateData() {
     const intervalIncrement = this.getIncrement();
     const intervals = this.getIntervals(intervalIncrement);
     const distribution = this.getDistribution(intervals);
+
+    // update chart if chart has already been created
+    if (this.state.chart) this.updateChart(distribution, intervals);
+
     this.setState({ intervals, distribution }, () => console.log(this.state) )
+  }
+
+  updateChart(distribution, intervals) {
+    const chart = this.state.chart;
+    // changes the data to the updated points
+    chart.data.datasets[0].data = distribution;
+
+    // forces a rerender for the chart
+    chart.update();
+
+    // threre's a glitch in the library and need to set timeout in order
+    // to change scale labels when selection has changed
+    setTimeout(() => {
+      chart.data.labels = intervals;
+      chart.update();
+    }, 0);
   }
 
   getDistribution(intervals) {
@@ -170,8 +236,12 @@ class BimmedHistogram extends React.Component {
   }
 
   render() {
+    const { axis } = this.props;
     return(
-      <canvas idx={`${axis}-histogram`}/>
+      <div className='histogram'>
+        <h4>Distribution Histogram of {this.props[`${axis}Axis`]}</h4>
+        <canvas id={`${axis}-histogram`} height={'80px'}/>
+      </div>
     )
   }
 }

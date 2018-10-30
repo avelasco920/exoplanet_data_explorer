@@ -42,9 +42,9 @@ class ScatterPlot extends React.Component {
       // threre's a glitch in the library and need to set timeout in order
       // to change scale labels when selection has changed
       setTimeout(() => {
-         chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
-         chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
-         chart.update();
+        chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
+        chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
+        chart.update();
       }, 0);
     }
   }
@@ -55,7 +55,6 @@ class ScatterPlot extends React.Component {
         type: 'scatter',
         data: {
           datasets: [{
-            label: 'Scatter Dataset',
             // dataPoints received from local state in content component
             data: this.props.dataPoints,
             pointBackgroundColor: 'rgba(255, 255, 255, .3)',
