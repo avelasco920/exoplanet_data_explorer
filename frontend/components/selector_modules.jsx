@@ -63,7 +63,7 @@ class SelectorModules extends React.Component {
 const SelectorModule = props => {
   const { axis, options } = props;
   return (
-    <div className='selector'>
+    <div className='selector module'>
       <h3 className='header'>{axis.toUpperCase()}-Axis</h3>
       <Select
         options={options}

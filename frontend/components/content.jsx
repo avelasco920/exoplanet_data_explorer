@@ -1,5 +1,6 @@
 import React from 'react';
-import SelectorModules from './selector_module';
+import SelectorModules from './selector_modules';
+import VisualizationModule from './visualization_module';
 import csv from '../../data/phl_hec_all_confirmed.csv';
 
 class Content extends React.Component {
@@ -40,6 +41,11 @@ class Content extends React.Component {
     return (
       <div className='content'>
         <SelectorModules handleChange={this.updateAxisSelection} />
+        <VisualizationModule
+          xAxis={this.state.xAxis}
+          yAxis={this.state.yAxis}
+          points={this.state.points}
+        />
       </div>
     )
   }
