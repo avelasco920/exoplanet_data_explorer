@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import csv from '../../data/phl_hec_all_confirmed.csv';
+import lodash from 'lodash';
 
 class SelectorModules extends React.Component {
   constructor(props) {
@@ -15,10 +16,11 @@ class SelectorModules extends React.Component {
 
   getLabels() {
     let labels = Object.keys(csv[0]);
+
+    // ignore collumns that aren't numerical values
     const nonNumVals = [
       'P. Name',
       'P. Name Kepler',
-      'P. Name KOI',
       'P. Zone Class',
       'P. Mass Class',
       'P. Composition Class',
@@ -33,6 +35,8 @@ class SelectorModules extends React.Component {
       'P. Max Mass (EU)'
     ]
     labels = labels.filter(label => !nonNumVals.includes(label))
+
+    // return labels in an array of objects for select dropdown format
     return labels.map(el => {
       const obj = {};
       obj['value'] = el;
@@ -47,12 +51,12 @@ class SelectorModules extends React.Component {
         <SelectorModule
           axis='x'
           options={this.state.labels}
-          handleChange={this.props.handleChange}
+          {...this.props}
         />
         <SelectorModule
           axis='y'
           options={this.state.labels}
-          handleChange={this.props.handleChange}
+          {...this.props}
         />
       </div>
     )
@@ -61,13 +65,12 @@ class SelectorModules extends React.Component {
 
 
 
+
+
+
+
 const SelectorModule = props => {
   const { axis, options } = props;
-
-  // react-select takes inline styling to customize styling
-  const style = {
-
-  }
   return (
     <div className='selector module'>
       <h3 className='header'>{axis.toUpperCase()}-Axis</h3>
@@ -77,11 +80,72 @@ const SelectorModule = props => {
         classNamePrefix='select'
         isSearchable={true}
         autosize={false}
-        onChange={ props.handleChange(axis) }
+        onChange={ input => props.handleChange(axis, input) }
         name="color"
       />
+      <BimmedHistogram {...props}/>
     </div>
   )
 }
+
+
+
+
+
+
+
+
+class BimmedHistogram extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { axis } = this.props
+    if (prevProps[`${axis}Axis`] !== this.props[`${axis}Axis`]) {
+      this.getIntervals()
+    }
+  }
+
+  updateData() {
+
+    console.log(this.props);
+    console.log(intervals);
+  }
+
+  getIntervals() {
+    const { axis } = this.props;
+    const max = this.props[`${axis}Max`];
+    const min = this.props[`${axis}Min`];
+    const intervalIncrement = (max - min) / 20;
+    const intervals = [];
+    let increment = min;
+    while (increment < max) {
+      intervals.push(`${increment-.1}-${increment + intervalIncrement}`);
+      increment += intervalIncrement;
+    }
+    console.log(intervals);
+    return intervals
+  }
+
+  render() {
+    return(
+      <div>
+
+      </div>
+    )
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default SelectorModules;

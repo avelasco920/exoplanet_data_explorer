@@ -4,22 +4,13 @@ import lodash from 'lodash';
 
 class VisualizationModule extends React.Component {
   render() {
-    const { xAxis, yAxis, points } = this.props;
-    // don't display chart until x and y labels have been selected
-    if (!xAxis || !yAxis) {
-      return (
-        <div className='module'>
-          <h3>Please select X and Y axis labels</h3>
-        </div>
-      )
-    } else {
-      return (
-        <div className='module vis'>
-          <h1>{xAxis} vs {yAxis}</h1>
-          <ScatterPlot {...this.props}/>
-        </div>
-      )
-    }
+    const { xAxis, yAxis, dataPoints } = this.props;
+    return (
+      <div className='module vis'>
+        <header><h1>{xAxis}</h1><h3> vs </h3><h1>{yAxis}</h1></header>
+        <ScatterPlot {...this.props}/>
+      </div>
+    )
   }
 }
 
@@ -39,25 +30,33 @@ class ScatterPlot extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { dataPoints, xAxis, yAxis } = this.props;
     // does a deep check to see if the points in the chart has changed
-    if ( !lodash.isEqual(prevProps.points, this.props.points) ) {
+    if ( !lodash.isEqual(prevProps.dataPoints, dataPoints) ) {
       const chart = this.state.chart;
       // changes the data to the updated points
-      chart.data.datasets[0].data = this.props.points;
+      chart.data.datasets[0].data = this.props.dataPoints;
+      chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
+      chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
       // forces a rerender for the chart
       chart.update();
+      setTimeout(function() {
+         chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
+         chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
+         chart.update();
+      }, 0);
     }
   }
 
   createPlot() {
-    console.log('max 5 ticks');
     const ctx = document.getElementById('ctx').getContext('2d');
     return new Chart(ctx, {
-      type: 'scatter',
+        type: 'scatter',
         data: {
           datasets: [{
             label: 'Scatter Dataset',
-            data: this.props.points,
+            // dataPoints received from local state in content component
+            data: this.props.dataPoints,
             pointBackgroundColor: 'rgba(255, 255, 255, .3)',
             pointHoverBackgroundColor: 'rgba(255, 255, 255, .8)',
             pointBorderColor: 'rgba(255, 255, 255, .8)',
@@ -84,6 +83,8 @@ class ScatterPlot extends React.Component {
                 fontColor: 'white',
                 autoSkip: true,
                 maxTicksLimit: 5,
+                // when using logarithmic scales, ticks are
+                // in scientific notation. need to stringify
                 callback: (tick) => tick.toLocaleString()
               }
             }],
@@ -102,6 +103,8 @@ class ScatterPlot extends React.Component {
                 fontColor: 'white',
                 autoSkip: true,
                 maxTicksLimit: 5,
+                // when using logarithmic scales, ticks are
+                // in scientific notation. need to stringify
                 callback: (tick) => tick.toLocaleString()
               }
             }]

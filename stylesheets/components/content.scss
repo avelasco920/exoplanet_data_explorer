@@ -33,5 +33,11 @@
 .vis {
   background: linear-gradient(60deg, $teal, $blue);
   background: -webkit-linear-gradient(60deg, $teal, $blue);
-  h1 { color: white; }
+  header {
+    display: flex;
+    padding-bottom: 30px;
+    align-items: center;
+    h1 { color: white; }
+    h3 { color: white; padding: 0 15px; }
+  }
 }
