@@ -2,24 +2,6 @@ import React from 'react';
 import Chart from 'chart.js';
 import lodash from 'lodash';
 
-const VisualizationModule = props => (
-  <div className='module vis'>
-    <VisHeader />
-    <ScatterPlot {...props}/>
-  </div>
-)
-
-
-
-
-const VisHeader = props => {
-  const { xAxis, yAxis } = props;
-  return <header><h1>{xAxis}</h1><h3> vs </h3><h1>{yAxis}</h1></header>;
-}
-
-
-
-
 class ScatterPlot extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +11,7 @@ class ScatterPlot extends React.Component {
   componentDidMount() {
     const chart = this.createPlot();
     // hold reference to chart in local state to update when new data comes in
-    this.setState({chart})
+    this.setState({ chart })
   }
 
   componentDidUpdate(prevProps) {
@@ -62,10 +44,10 @@ class ScatterPlot extends React.Component {
     chart.update();
 
     // threre's a glitch in the library and need to set timeout in order
-    // to change scale labels when selection has changed
+    // to change scale features when selection has changed
     setTimeout(() => {
-      chart.options.scales.xAxes[0].scaleLabel.labelString = xAxis;
-      chart.options.scales.yAxes[0].scaleLabel.labelString = yAxis;
+      chart.options.scales.xAxes[0].scaleFeature.featureString = xAxis;
+      chart.options.scales.yAxes[0].scaleFeature.featureString = yAxis;
       chart.update();
     }, 0);
   }
@@ -91,8 +73,8 @@ class ScatterPlot extends React.Component {
             xAxes: [{
               type: this.props.xScale,
               position: 'bottom',
-              scaleLabel: {
-                labelString: this.props.xAxis,
+              scaleFeature: {
+                featureString: this.props.xAxis,
                 fontColor: 'white',
                 display: true
               },
@@ -111,8 +93,8 @@ class ScatterPlot extends React.Component {
             }],
             yAxes: [{
               type: this.props.yScale,
-              scaleLabel: {
-                labelString: this.props.yAxis,
+              scaleFeature: {
+                featureString: this.props.yAxis,
                 fontColor: 'white',
                 display: true
               },
@@ -141,4 +123,5 @@ class ScatterPlot extends React.Component {
   }
 }
 
-export default VisualizationModule;
+
+export default ScatterPlot;

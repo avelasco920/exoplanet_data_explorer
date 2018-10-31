@@ -25,7 +25,17 @@ Exoplanet Data Explorer is a dynamic single-app visualization tool for users to 
 - React-Select
 - Express
 
+## Component Architecture
+
+### Reusability
+
+The architecture of components was written with the intention of reusability by being able to pass data and functions down from abstracted components.
+
+- `<Content/>` contains the main logic to grab the data and pass it down to the appropriate components. When data changes in this component (either within itself or from a child component), the updated data is passed down to both the `<SelectorModules/>` and `<ScatterModule/>`
+- The `<SelectorModules/>` component renders two modules that are responsible for changing axes options in the `<ScatterModule />`
+- `<ScatterModule/>` takes in datapoints and scale view options and alters the scatter plot accordingly
+
 ## Setup
 - `$ npm install` Install node modules
-- `$ npm start` Run script to start express and run webpack
+- `$ npm start` Run script to start express server and run webpack
 - open `http://localhost:8080` in browser

@@ -47,11 +47,11 @@ class BinnedHistogram extends React.Component {
   }
 
   getDistribution(intervals) {
-    const { dataPoints, axis, numBars } = this.props;
+    const { dataPoints, axis, histogramBarCount } = this.props;
 
     // create an empty array of length 10 with values of 0
     // to correllate to the array of intervals
-    let distribution = new Array(numBars);
+    let distribution = new Array(histogramBarCount);
     distribution = distribution.fill(0);
 
     // increment count in distribution array at correllating intervals index
@@ -73,10 +73,10 @@ class BinnedHistogram extends React.Component {
 
   getIncrement() {
     // returns individual value that each range is incremented by
-    const { axis, numBars } = this.props;
+    const { axis, histogramBarCount } = this.props;
     const max = this.props[`${axis}Max`];
     const min = this.props[`${axis}Min`];
-    return this.roundToTwo((max - min) / numBars);
+    return this.roundToTwo((max - min) / histogramBarCount);
   }
 
   roundToTwo(num) {
@@ -86,7 +86,7 @@ class BinnedHistogram extends React.Component {
   }
 
   getIntervals(intervalIncrement) {
-    const { axis, numBars } = this.props;
+    const { axis, histogramBarCount } = this.props;
     const intervals = [],
           min = this.props[`${axis}Min`];
     // range start from min instead of 0 in case range is less than 0
@@ -94,7 +94,7 @@ class BinnedHistogram extends React.Component {
           i = 1;
 
     // create the array of intervals
-    while (i <= numBars) {
+    while (i <= histogramBarCount) {
       intervals.push(this.roundToTwo(intervalCeil));
       intervalCeil += intervalIncrement;
       i ++;
