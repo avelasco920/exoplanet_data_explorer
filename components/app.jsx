@@ -1,7 +1,29 @@
 import React from 'react';
 import SelectorModules from './selector_modules';
 import VisualizationModule from './visualization_module';
-import csv from '../../data/phl_hec_all_confirmed.csv';
+import csv from '../data/phl_hec_all_confirmed.csv';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className='app'>
+        <Navbar />
+        <Content />
+      </div>
+    );
+  }
+}
+
+
+
+const Navbar = () => (
+  <div className='navbar'>
+    <h1 className='title'>Exoplanet Data Explorer</h1>
+  </div>
+)
+
+
+
 
 class Content extends React.Component {
   constructor() {
@@ -15,7 +37,7 @@ class Content extends React.Component {
     }
     // binding functions that are called in other components
     //  and directly makes a change to this component
-    this.updateFeature = this.updateFeature.bind(this);
+    this.updateLabel = this.updateLabel.bind(this);
     this.updateParams = this.updateParams.bind(this);
   }
 
@@ -31,8 +53,8 @@ class Content extends React.Component {
     })
   }
 
-  updateParams(label, value) {
-    this.setState({[label]: value});
+  updateParams(property, value) {
+    this.setState({[property]: value});
   }
 
   getData(x, y) {
@@ -54,14 +76,19 @@ class Content extends React.Component {
     return { dataPoints, xMax, xMin, yMax, yMin }
   }
 
-  updateFeature(axis, input) {
-    let xAxis, yAxis;
-    if (axis === 'x') {
-      xAxis = input.value;
-      yAxis = this.state['yAxis']
-    } else {
-      yAxis = input.value;
-      xAxis = this.state['xAxis'];
+  updateLabel(axis, input) {
+    const label = input.value;
+    let xAxis, yAxis
+
+    switch(axis) {
+      case 'x':
+        xAxis = label;
+        yAxis = this.state['yAxis'];
+        break;
+      case 'y':
+        yAxis = label;
+        xAxis = this.state['xAxis'];
+        break;
     }
 
     // query the csv for datapoints
@@ -82,7 +109,7 @@ class Content extends React.Component {
     return (
       <div className='content'>
         <SelectorModules
-          updateFeature={this.updateFeature}
+          updateLabel={this.updateLabel}
           updateParams={this.updateParams}
           // passing down state as props so SelectorModules
           // have access to axis labels and dataPoints
@@ -94,4 +121,5 @@ class Content extends React.Component {
   }
 }
 
-export default Content;
+
+export default App;

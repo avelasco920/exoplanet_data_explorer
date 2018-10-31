@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import csv from '../../data/phl_hec_all_confirmed.csv';
+import csv from '../data/phl_hec_all_confirmed.csv';
 import BinnedHistogram from './binned_histogram';
 
 class SelectorModules extends React.Component {
@@ -66,10 +66,6 @@ class SelectorModules extends React.Component {
 
 
 
-
-
-
-
 const SelectorModule = props => {
   const { axis, options } = props;
   return (
@@ -82,18 +78,15 @@ const SelectorModule = props => {
         classNamePrefix='select'
         isSearchable={true}
         autosize={false}
-        onChange={ input => props.updateFeature(axis, input) }
+        onChange={ input => props.updateLabel(axis, input) }
         name='color'
       />
       <ScaleOptions {...props}/>
+      <Warning {...props}/>
       <BinnedHistogram numBars={30} {...props}/>
     </div>
   )
 }
-
-
-
-
 
 
 
@@ -122,6 +115,37 @@ class ScaleOptions extends React.Component {
   }
 }
 
+
+
+class Warning extends React.Component {
+  warning() {
+    const { axis } = this.props;
+    const scale = this.props[`${axis}Scale`];
+    const label = this.props[`${axis}Axis`];
+    const labelsWNegVals = [
+      'P. Mag',
+      'S. [Fe/H]',
+      'S. DEC (deg)',
+      'S. Mag from Planet',
+      'P. HZD',
+      'P. HZC',
+      'P. HZA',
+    ]
+    if (labelsWNegVals.includes(label) && scale === 'logarithmic') {
+      return 'This feature contains negative values that are only visible in linear view.'
+    } else {
+      return '';
+    }
+  }
+
+  render() {
+    return (
+      <div className='warning'>
+        <span>{this.warning()}</span>
+      </div>
+    )
+  }
+}
 
 
 

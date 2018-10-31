@@ -19,43 +19,6 @@ class BinnedHistogram extends React.Component {
     }
   }
 
-  createChart() {
-    const { axis } = this.props;
-    const ctx = document.getElementById(`${axis}-histogram`);
-    var stackedBar = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: this.state.intervals,
-        datasets: [{
-          backgroundColor: '#2684ff',
-          hoverBackgroundColor: '#2684ff',
-          data: this.state.distribution
-        }]
-      },
-      options: {
-        legend: {
-          display: false,
-        },
-        axisY: {lineThickness: 1},
-        scales: {
-          scaleLineColor: 'transparent',
-          xAxes: [{
-            stacked: true,
-            barThickness : 8,
-            gridLines : { color: 'white' },
-            ticks: { fontColor: '#c4c4c4' },
-          }],
-          yAxes: [{
-            stacked: true,
-            gridLines : { color: '#f3f3f3' },
-            ticks: { fontColor: '#c4c4c4' },
-          }]
-        }
-      }
-    });
-    this.setState({chart: stackedBar})
-  }
-
   updateData() {
     const intervalIncrement = this.getIncrement();
     const intervals = this.getIntervals(intervalIncrement);
@@ -64,7 +27,7 @@ class BinnedHistogram extends React.Component {
     // update chart if chart has already been created
     if (this.state.chart) this.updateChart(distribution, intervals);
 
-    this.setState({ intervals, distribution }, () => console.log(this.state) )
+    this.setState({ intervals, distribution })
   }
 
   updateChart(distribution, intervals) {
@@ -137,6 +100,44 @@ class BinnedHistogram extends React.Component {
       i ++;
     }
     return intervals
+  }
+
+
+  createChart() {
+    const { axis } = this.props;
+    const ctx = document.getElementById(`${axis}-histogram`);
+    var stackedBar = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: this.state.intervals,
+        datasets: [{
+          backgroundColor: '#2684ff',
+          hoverBackgroundColor: '#2684ff',
+          data: this.state.distribution
+        }]
+      },
+      options: {
+        legend: {
+          display: false,
+        },
+        axisY: {lineThickness: 1},
+        scales: {
+          scaleLineColor: 'transparent',
+          xAxes: [{
+            stacked: true,
+            barThickness : 8,
+            gridLines : { color: 'white' },
+            ticks: { fontColor: '#c4c4c4' },
+          }],
+          yAxes: [{
+            stacked: true,
+            gridLines : { color: '#f3f3f3' },
+            ticks: { fontColor: '#c4c4c4' },
+          }]
+        }
+      }
+    });
+    this.setState({chart: stackedBar})
   }
 
   render() {

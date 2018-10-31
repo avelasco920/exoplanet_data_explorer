@@ -1,3 +1,19 @@
+.navbar {
+  background-color: white;
+  border-bottom: 1px solid $light-gray;
+  width: 100vw;
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4000;
+  .title {
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #AAE4E9;
+  }
+}
+
 .content {
   margin: 62px auto 0 auto;
   padding: 50px;
@@ -45,6 +61,13 @@
         color: $light-blue;
       }
     }
+  }
+
+  .warning {
+    height: 10px;
+    padding-top: 10px;
+    box-sizing: border-box;
+    span { color: $red }
   }
 
   .select {
