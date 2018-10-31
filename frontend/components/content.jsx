@@ -9,11 +9,14 @@ class Content extends React.Component {
     this.state = {
       dataPoints: [],
       xAxis: 'P. Min Mass (EU)',
-      yAxis: 'P. Radius (EU)'
+      yAxis: 'P. Radius (EU)',
+      xScale: 'linear',
+      yScale: 'linear'
     }
-    // binding handleChange becuase the function is called in
-    // a selector module and it directly makes a change to the Content component
-    this.handleChange = this.handleChange.bind(this);
+    // binding functions that are called in other components
+    //  and directly makes a change to this component
+    this.updateFeature = this.updateFeature.bind(this);
+    this.updateParams = this.updateParams.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +29,10 @@ class Content extends React.Component {
       yMax: data.yMax,
       yMin: data.yMin,
     })
+  }
+
+  updateParams(label, value) {
+    this.setState({[label]: value});
   }
 
   getData(x, y) {
@@ -47,7 +54,7 @@ class Content extends React.Component {
     return { dataPoints, xMax, xMin, yMax, yMin }
   }
 
-  handleChange(axis, input) {
+  updateFeature(axis, input) {
     let xAxis, yAxis;
     if (axis === 'x') {
       xAxis = input.value;
@@ -75,16 +82,13 @@ class Content extends React.Component {
     return (
       <div className='content'>
         <SelectorModules
-          handleChange={this.handleChange}
+          updateFeature={this.updateFeature}
+          updateParams={this.updateParams}
           // passing down state as props so SelectorModules
           // have access to axis labels and dataPoints
           {...this.state}
         />
-        <VisualizationModule
-          xAxis={this.state.xAxis}
-          yAxis={this.state.yAxis}
-          dataPoints={this.state.dataPoints}
-        />
+        <VisualizationModule {...this.state} />
       </div>
     )
   }

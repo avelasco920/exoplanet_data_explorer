@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "bundle.js",
-  "scripts": { "start": "node ./serverhost.js" },
+  "scripts": {
+    "start": "node ./serverhost.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
