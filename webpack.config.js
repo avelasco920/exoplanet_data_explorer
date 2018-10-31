@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   context: __dirname,
-  entry: "./entry.jsx",
+  entry: "./components/entry.jsx",
   mode: "development",
   output: {
     path: path.resolve(__dirname),
