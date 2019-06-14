@@ -2,6 +2,9 @@
   "name": "Exoplanet_Data_Explorer",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "8.10.0"
+  },
   "main": "bundle.js",
   "scripts": {
     "start": "if test \"$NODE_ENV\" = \"production\"; then node ./bundle.js; else node./serverhost.js fi",
