@@ -1,12 +1,17 @@
 var path = require("path");
+const webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
   entry: "./components/entry.jsx",
   mode: "development",
   output: {
-    path: path.resolve(__dirname),
-    filename: "bundle.js"
+    path: path.join(__dirname, 'public'),
+    filename: "bundle.js",
+    publicPath: "/"
+  },
+  devServer: {
+    contentBase: './dist',
   },
   module: {
     rules: [
@@ -48,5 +53,8 @@ module.exports = {
   },
   node: {
     fs: 'empty'
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
 };
