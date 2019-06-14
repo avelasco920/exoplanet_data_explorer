@@ -16,6 +16,7 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }));
 
-app.listen(8080, () => {
-  console.log('Exoplanet Data Explorer listening on port 8080!')
+port = process.env.PORT || 8080
+app.listen(port, () => {
+  console.log(`Exoplanet Data Explorer listening on port ${port}!`)
 });
