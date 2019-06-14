@@ -27,9 +27,7 @@
     "papaparse": "^4.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-select": "^2.1.1"
-  },
-  "devDependencies": {
+    "react-select": "^2.1.1",
     "body-parser": "^1.18.3",
     "css-loader": "^0.28.10",
     "csv-loader": "^3.0.2",
