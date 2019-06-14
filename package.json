@@ -5,7 +5,7 @@
   "engines": {
     "node": "8.10.0"
   },
-  "main": "bundle.js",
+  "main": "./public/bundle.js",
   "scripts": {
     "start": "nodemon --exec babel-node serverhost.js",
     "build": "if test \"$NODE_ENV\" = \"production\"; then webpack; else webpack --watch; fi"
@@ -37,7 +37,7 @@
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "webpack": "^4.34.0",
-    "webpack-cli": "^2.1.5",
+    "webpack-cli": "^3.1.1",
     "webpack-dev-middleware": "^3.4.0"
   }
 }
