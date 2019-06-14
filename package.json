@@ -7,8 +7,7 @@
   },
   "main": "bundle.js",
   "scripts": {
-    "start": "concurrently \"nodemon --exec babel-node serverhost.js\" \"webpack --watch\"",
-    "heroku-postbuild": "NODE_ENV=production"
+    "start": "concurrently \"nodemon --exec babel-node serverhost.js\" \"webpack --watch\""
   },
   "author": "",
   "license": "ISC",
