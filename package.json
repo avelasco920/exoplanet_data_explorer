@@ -4,6 +4,7 @@
   "description": "",
   "main": "bundle.js",
   "scripts": {
+    "start": "if test \"$NODE_ENV\" = \"production\"; then node ./bundle.js; else node./serverhost.js"
     "start": "node ./serverhost.js"
   },
   "author": "",
