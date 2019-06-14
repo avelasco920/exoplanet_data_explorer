@@ -5,7 +5,8 @@
   "main": "bundle.js",
   "scripts": {
     "start": "if test \"$NODE_ENV\" = \"production\"; then node ./bundle.js; else node./serverhost.js fi",
-    "heroku-postbuild": "npm run prod:build-client && npm run prod:build-server"
+    "prod:build-client": "NODE_ENV=production ./node_modules/.bin/webpack --config=webpack.config.js -p",
+    "heroku-postbuild": "npm run prod:build"
   },
   "author": "",
   "license": "ISC",
