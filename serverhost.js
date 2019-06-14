@@ -6,6 +6,8 @@ const path = require('path');
 const compiler = webpack(config);
 const bodyParser = require('body-parser');
 const app = express();
+require('dotenv').config()
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
