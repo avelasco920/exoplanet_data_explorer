@@ -4,7 +4,7 @@
   "description": "",
   "main": "bundle.js",
   "scripts": {
-    "start": "if test \"$NODE_ENV\" = \"production\"; then node ./bundle.js; else node./serverhost.js",
+    "start": "if test \"$NODE_ENV\" = \"production\"; then node ./bundle.js; else node./serverhost.js fi",
     "heroku-postbuild": "npm run prod:build-client && npm run prod:build-server"
   },
   "author": "",
