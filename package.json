@@ -7,7 +7,8 @@
   },
   "main": "bundle.js",
   "scripts": {
-    "start": "concurrently \"nodemon --exec babel-node serverhost.js\" \"webpack --watch\""
+    "start": "nodemon --exec babel-node serverhost.js",
+    "build": "if test \"$NODE_ENV\" = \"production\"; then webpack; else webpack --watch; fi"
   },
   "author": "",
   "license": "ISC",
